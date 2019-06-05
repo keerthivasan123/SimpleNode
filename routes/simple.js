@@ -15,9 +15,15 @@ router.get('/login', (req, res) => {
 
 
 //Register Page
+router.get('/register', (req, res) => {
+  
+  res.render('Register',{
+  isAuthenticated: false,
+  })
+}
+);
 
 //Dashboard
-//dashboard
 router.get('/dashboard', (req, res) =>{ 
     if(!req.session.isLoggedIn)
     {
