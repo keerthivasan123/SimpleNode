@@ -2,6 +2,7 @@ const expressLayouts = require('express-ejs-layouts');
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const flash = require('connect-flash');
 
 //setting express
 var app = express();
@@ -43,6 +44,17 @@ app.use(
       store: store
     })
   );
+
+// Connect flash
+app.use(flash());
+
+// Global variables
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 //Routes
 app.use('/', require('./routes/simple.js'));
