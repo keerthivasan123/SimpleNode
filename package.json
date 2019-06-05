@@ -1,0 +1,24 @@
+{
+  "name": "simple-node",
+  "version": "1.0.0",
+  "description": "for internship",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keerthivasan123/SimpleNode.git"
+  },
+  "author": "keerthivasan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keerthivasan123/SimpleNode/issues"
+  },
+  "homepage": "https://github.com/keerthivasan123/SimpleNode#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1"
+  }
+}
