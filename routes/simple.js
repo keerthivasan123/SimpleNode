@@ -14,6 +14,39 @@ router.get('/login', (req, res) => {
   }
   );
 
+  router.post('/login', (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    let errors = [];
+    Simple.findOne({ email: email })
+      .then(simple => {
+        if (!simple) {
+          errors.push({ msg: 'Email not registered' });
+          return res.render('Login', {
+            errors,
+            email,
+            password
+          });
+        }
+        var isMatch = password.localeCompare(simple.password);
+        //console.log(isMatch);
+        //console.log(user.password);
+        if (isMatch==0) {
+          req.session.isLoggedIn = true;
+          req.session.user = simple;
+          return req.session.save(err => {
+            
+            console.log(err);
+            res.redirect('dashboard/');
+          });
+          
+        }
+        res.redirect('login/');
+        
+    });
+  });
+  
+
 
 //Register Page
 router.get('/register', (req, res) => {
@@ -87,13 +120,21 @@ if (errors.length >  0) {
 router.get('/dashboard', (req, res) =>{ 
     if(!req.session.isLoggedIn)
     {
-      return res.redirect('login/');
+      return res.redirect('/login');
     }
-    res.render('student/dashboard',{
+    res.render('dashboard',{
     isAuthenticated: req.session.isLoggedIn,
-    name : req.param.rollnumber
+    email: req.session.user.email
   })
   }
   );
+
+// Logout
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+  console.log(err);
+  res.redirect('login/');
+  });
+});
 
 module.exports = router;
